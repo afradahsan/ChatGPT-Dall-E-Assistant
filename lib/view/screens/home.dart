@@ -22,17 +22,24 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Palette.lightgrey)
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Palette.lightgrey)
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Palette.lightgrey)
+                      ),
+                    ),
+                    controller: prompt,
+                  ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Palette.lightgrey)
-                ),
-              ),
-              controller: prompt,
-            )
+                Expanded(child: Icon(Icons.mic))
+              ],
+            ),
           ],
         ),
       )),
