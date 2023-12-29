@@ -11,8 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Chat GPT',
       home: HomePage(),
+      theme: ThemeData(
+        fontFamily: 'Poppins'
+      ),
     );
   }
 }
