@@ -14,33 +14,55 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth = MediaQuery.sizeOf(context).width;
+    double screenHeight = MediaQuery.sizeOf(context).height;
+
+    print(screenHeight);
+
     return Scaffold(
       backgroundColor: Palette.gptbackground,
       appBar: AppBar(title: const Text('ChatGPT', style: TextStyle(color: Colors.white),), centerTitle: true, backgroundColor: Palette.transparent, elevation: 0,),
       body: SafeArea(child: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Palette.lightgrey)
+        child: Container(
+          height: screenHeight,
+          width: screenWidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Stack(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: screenHeight/15,
+                        width: screenWidth/1.27,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Palette.lightgrey)
+                            ),
+                          ),
+                          controller: prompt,
+                        ),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Palette.lightgrey)
-                      ),
-                    ),
-                    controller: prompt,
-                  ),
-                ),
-                Expanded(child: Icon(Icons.mic))
-              ],
-            ),
-          ],
+                      SizedBox(width: screenWidth/30,),
+                      Container(
+                        height: screenHeight/25.6,
+                        width: screenHeight/25.6,
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                        child: Icon(Icons.mic, color: Palette.gptbackground, size: 10,)),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       )),
     );
