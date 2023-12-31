@@ -31,7 +31,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-lib\view\constants\secret.dart
+lib/view/constants/secret.dart
 
 # Symbolication related
 app.*.symbols
