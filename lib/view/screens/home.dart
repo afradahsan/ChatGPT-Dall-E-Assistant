@@ -1,5 +1,8 @@
+import 'package:chatgpt/model/openai_services.dart';
 import 'package:chatgpt/view/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +14,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   TextEditingController prompt = TextEditingController();
+  SpeechToText speechToText = SpeechToText();
+  String lastWords = '';
+  final OpenAIService openAIService = OpenAIService();
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeech();
+  }
+
+  void initSpeech() async {
+    await speechToText.initialize();
+    setState(() {});
+  }
+
+  /// Each time to start a speech recognition session
+  Future<void> startListening() async {
+    await speechToText.listen(onResult: onSpeechResult);
+    setState(() {});
+  }
+
+  /// Manually stop the active speech recognition session
+  Future<void> stopListening() async {
+    await speechToText.stop();
+    setState(() {});
+  }
+
+  //the callback the plugin calls when the platform returns recognized words.
+  void onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      lastWords = result.recognizedWords;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    speechToText.stop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +110,17 @@ class _HomePageState extends State<HomePage> {
                         height: screenHeight/25.6,
                         width: screenHeight/25.6,
                         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                        child: Icon(Icons.mic, color: Palette.gptbackground, size: 17,)),
+                        child: IconButton(icon: Icon(Icons.mic, color: Palette.gptbackground, size: 17,), onPressed: () async{
+                          print('listen');
+                          if(await speechToText.hasPermission && speechToText.isNotListening){
+                            await startListening();
+                          }else if(speechToText.isListening){
+                            await openAIService.isArtPromptAPI(lastWords);
+                            await stopListening();
+                          }else{
+                            initSpeech();
+                          }
+                        },)),
                     ],
                   )
                 ],
