@@ -116,6 +116,7 @@ class _HomePageState extends State<HomePage> {
                             await startListening();
                           }else if(speechToText.isListening){
                             await openAIService.isArtPromptAPI(lastWords);
+                            print('stopped');
                             await stopListening();
                           }else{
                             initSpeech();
