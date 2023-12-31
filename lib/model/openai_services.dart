@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chatgpt/view/constants/.gitignore';
+import 'package:chatgpt/view/constants/secret.dart';
 import 'package:http/http.dart' as http;
 
 class OpenAIService{
